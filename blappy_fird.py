@@ -216,7 +216,7 @@ def main(genomes, config):
 
         pipe_index = 0
         if len(birds) > 0:
-            if len(pipes) > 1 and birds[0].x > pipes[0].PIPE_TOP.get_width():
+            if len(pipes) > 1 and birds[0].x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
                 pipe_index = 1
         else:
             run = False
@@ -228,7 +228,8 @@ def main(genomes, config):
 
             output = nets[x].activate((bird.y,
                                        abs(bird.y - pipes[pipe_index].height),
-                                       abs(bird.y - pipes[pipe_index].bottom)))
+                                       abs(bird.y - pipes[pipe_index].bottom),
+                                       abs(pipes[pipe_index].x)))
 
             if output[0] > 0.5:
                 bird.jump()
@@ -238,7 +239,7 @@ def main(genomes, config):
         for pipe in pipes:
             for x, bird in enumerate(birds):
                 if pipe.collide(bird):
-                    ge[x].fitness -= 1
+                    ge[x].fitness -= 2
                     birds.pop(x)
                     nets.pop(x)
                     ge.pop(x)
