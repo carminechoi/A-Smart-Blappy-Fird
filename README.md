@@ -30,6 +30,13 @@ $ pipenv run python blappy_fird.py
 
 ## Demonstration
 
+Option 1:
+
+
+Option 2:
+
+
+Option 3:
 ![](https://media.giphy.com/media/TIFCQ1Evoe5Vncl85R/giphy.gif) 
 
 ## Built With
