@@ -47,3 +47,7 @@ Option 3:
 ## Authors
 
 * **Carmine Choi** 
+
+## Credit
+
+Huge thanks to [TechWithTim](https://tech-with-tim.teachable.com/) for his tutorial on using NEAT
