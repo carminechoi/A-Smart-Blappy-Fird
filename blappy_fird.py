@@ -20,6 +20,7 @@ WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption("Blappy Fird")
 pygame.display.set_icon(pygame.image.load('Images/bird_icon.ico'))
 
+PLAYER_BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load('Images/redbird-downflap.png').convert_alpha()), pygame.transform.scale2x(pygame.image.load('Images/redbird-midflap.png').convert_alpha()), pygame.transform.scale2x(pygame.image.load('Images/redbird-upflap.png').convert_alpha())]
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load('Images/bluebird-downflap.png').convert_alpha()), pygame.transform.scale2x(pygame.image.load('Images/bluebird-midflap.png').convert_alpha()), pygame.transform.scale2x(pygame.image.load('Images/bluebird-upflap.png').convert_alpha())]
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load('Images/pipe.png').convert_alpha())
 GROUND_IMG = pygame.transform.scale2x(pygame.image.load('Images/ground.png').convert_alpha())
@@ -68,6 +69,23 @@ def draw_play_window(win, bird, pipes, ground, score):
     ground.draw(win)
 
     bird.draw(win)
+
+    pygame.display.update()
+
+
+def draw_verse_window(win, ai_bird, player_bird, pipes, ground, score):
+    win.blit(BACKGROUND_IMG, (0, 0))
+
+    for pipe in pipes:
+        pipe.draw(win)
+
+    text = STAT_FONT.render("Score: " + str(score), 1, (255, 255, 255))
+    win.blit(text, (WIN_WIDTH - 10 - text.get_width(), 10))
+
+    ground.draw(win)
+
+    ai_bird.draw(win)
+    player_bird.draw(win)
 
     pygame.display.update()
 
@@ -158,14 +176,15 @@ def eval_genome(genomes, config):
                 nets.pop(x)
                 ge.pop(x)
 
-        if score >= 50:
+        if score >= 15:
+            print("score: ", score)
             run = False
 
         ground.move()
         draw_train_window(win, birds, pipes, ground, score, GEN)
 
 
-def train_bird():
+def load_train_bird():
     local_dir = os.path.dirname(__file__)
     config_file = os.path.join(local_dir, 'config-feedforward.txt')
 
@@ -180,11 +199,10 @@ def train_bird():
     p.add_reporter(stats)
 
     winner = p.run(eval_genome, 50)
-
-    print('\nBest genome:\n{!s}'.format(winner))
+    winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
 
     with open('best_bird.obj', 'wb') as output:
-        pickle.dump(winner, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(winner_net, output)
 
 
 def play_bird():
@@ -245,16 +263,19 @@ def verse_bird():
     global WIN, GEN
     win = WIN
 
+    print("in here")
     with open('best_bird.obj', 'rb') as best_bird:
-        bird_net = pickle.load(best_bird)
-        print(bird_net.__class__.__name__)
+        net = pickle.load(best_bird)
 
-    bird = Bird(230, 350)
-    ground = Ground(730)
-    pipes = [Pipe(600)]
+    ai_bird = Bird.Bird(230, 350, BIRD_IMGS)
+    player_bird = Bird.Bird(230, 350, PLAYER_BIRD_IMGS)
+    ground = Ground.Ground(730, GROUND_IMG)
+    pipes = [Pipe.Pipe(600, PIPE_IMG)]
 
     clock = pygame.time.Clock()
 
+    player_win = False
+    ai_win = False
     score = 0
 
     run = True
@@ -265,33 +286,38 @@ def verse_bird():
                 run = False
                 pygame.quit()
                 quit()
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_SPACE:
-            #         bird.jump()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    player_bird.jump()
 
         pipe_index = 0
 
-        if len(pipes) > 1 and bird.x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
+        if len(pipes) > 1 and ai_bird.x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
             pipe_index = 1
 
-        bird.move()
-        output = bird_net.activate((bird.y,
-                                   abs(bird.y - pipes[pipe_index].height),
-                                   abs(bird.y - pipes[pipe_index].bottom),
-                                   abs(pipes[pipe_index].x)))
+        ai_bird.move()
+        player_bird.move()
+
+        output = net.activate((ai_bird.y,
+                               abs(ai_bird.y - pipes[pipe_index].height),
+                               abs(ai_bird.y - pipes[pipe_index].bottom),
+                               abs(pipes[pipe_index].x)))
 
         if output[0] > 0.5:
-            bird.jump()
-
-        if ground.collide(bird):
-            run = False
+            ai_bird.jump()
 
         add_pipe = False
         rem = []
         for pipe in pipes:
-            if pipe.collide(bird):
+
+            if pipe.collide(ai_bird):
+                player_win = True
                 run = False
-            if not pipe.passed and pipe.x < bird.x:
+            if pipe.collide(player_bird):
+                ai_win = True
+                run = False
+
+            if not pipe.passed and pipe.x < ai_bird.x:
                 pipe.passed = True
                 add_pipe = True
 
@@ -302,14 +328,38 @@ def verse_bird():
 
         if add_pipe:
             score += 1
-            pipes.append(Pipe(600))
+            pipes.append(Pipe.Pipe(600, PIPE_IMG))
 
         for r in rem:
             pipes.remove(r)
 
-        ground.move()
-        draw_play_window(win, bird, pipes, ground, score)
+        if ai_bird.y + ai_bird.img.get_height() >= 730 or ai_bird.y < 0:
+            player_win = True
+            run = False
+        if player_bird.y + player_bird.img.get_height() >= 730 or player_bird.y < 0:
+            ai_win = True
+            run = False
 
+        if score >= 50:
+            run = False
+
+        ground.move()
+        draw_verse_window(win, ai_bird, player_bird, pipes, ground, score)
+
+
+def load_verse_bird():
+    local_dir = os.path.dirname(__file__)
+    config_file = os.path.join(local_dir, 'config-feedforward.txt')
+
+    config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                                neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                config_file)
+
+    p = neat.Population(config)
+
+    # winner = p.run(verse_bird, 10)
+
+    verse_bird()
 
 def menu():
     global WIN
@@ -326,9 +376,9 @@ def menu():
                 if event.key == pygame.K_LEFT:
                     play_bird()
                 if event.key == pygame.K_UP:
-                    train_bird()
+                    load_train_bird()
                 if event.key == pygame.K_RIGHT:
-                    verse_bird()
+                    load_verse_bird()
         draw_menu_window(win)
 
 
