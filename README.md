@@ -50,4 +50,4 @@ Option 3:
 
 ## Credit
 
-Huge thanks to [TechWithTim](https://tech-with-tim.teachable.com/) for his tutorial on using NEAT
+Huge thanks to [TechWithTim](https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg) for his tutorial on using NEAT
