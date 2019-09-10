@@ -25,7 +25,7 @@ BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load('Images/bluebird-downfla
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load('Images/pipe.png').convert_alpha())
 GROUND_IMG = pygame.transform.scale2x(pygame.image.load('Images/ground.png').convert_alpha())
 BACKGROUND_IMG = pygame.transform.scale(pygame.image.load('Images/background.png').convert_alpha(), (600, 900))
-MESSAGE_IMG = pygame.transform.scale2x(pygame.image.load('Images/message1.png').convert_alpha())
+MESSAGE_IMG = pygame.transform.scale2x(pygame.image.load('Images/message.png').convert_alpha())
 
 
 def draw_menu_window(win):
