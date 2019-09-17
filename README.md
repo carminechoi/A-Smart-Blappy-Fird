@@ -39,7 +39,7 @@ Option 2: Train
 
 ![](https://media.giphy.com/media/JRUpVRjfyLkRrvltDG/giphy.gif) 
 
-
+ 
 Option 3: Verse
 
 ![](https://media.giphy.com/media/TIFCQ1Evoe5Vncl85R/giphy.gif) 
