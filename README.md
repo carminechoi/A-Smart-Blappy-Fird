@@ -32,7 +32,7 @@ $ pipenv run python blappy_fird.py
 
 Option 1: Play
 
-![](DemoGif/BlappyFirdPlay.gif) 
+![](DemoGifs/BlappyFirdPlay.gif) 
 
 
 Option 2: Train
