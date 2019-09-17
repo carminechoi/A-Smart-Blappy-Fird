@@ -32,12 +32,12 @@ $ pipenv run python blappy_fird.py
 
 Option 1: Play
 
-![](https://giphy.com/gifs/J00QpSM3TmZRvJu64g/html5) 
+![](https://media.giphy.com/media/J00QpSM3TmZRvJu64g/giphy.gif) 
 
 
 Option 2: Train
 
-![](https://giphy.com/gifs/JRUpVRjfyLkRrvltDG/html5) 
+![](https://media.giphy.com/media/JRUpVRjfyLkRrvltDG/giphy.gif) 
 
 
 Option 3: Verse
