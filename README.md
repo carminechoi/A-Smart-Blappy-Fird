@@ -30,7 +30,9 @@ $ pipenv run python blappy_fird.py
 
 ## Demonstration
 
-Option 1:
+Option 1: Play
+
+![](https://media.giphy.com/media/M8QNGg7YCTTjisAzsS/giphy.gif) 
 
 
 Option 2:
