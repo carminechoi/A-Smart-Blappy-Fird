@@ -35,14 +35,17 @@ Option 1: Play
 ![](DemoGifs/BlappyFirdPlay.gif) 
 
 
+
 Option 2: Train
 
-![](https://media.giphy.com/media/JRUpVRjfyLkRrvltDG/giphy.gif) 
+![](DemoGifs/BlappyFirdTrain.gif) 
+
 
 
 Option 3: Verse
 
-![](https://media.giphy.com/media/J00QpSM3TmZRvJu64g/giphy.gif) 
+![](DemoGifs/BlappyFirdVerse.gif) 
+
 
 
 ## Built With
