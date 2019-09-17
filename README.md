@@ -42,7 +42,7 @@ Option 2: Train
 
 Option 3: Verse
 
-![](https://media.giphy.com/media/TIFCQ1Evoe5Vncl85R/giphy.gif) 
+![](https://giphy.com/gifs/JRUpVRjfyLkRrvltDG/html5) 
 
 
 ## Built With
