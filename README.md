@@ -37,7 +37,7 @@ Option 1: Play
 
 Option 2: Train
 
-![](https://media.giphy.com/media/J00QpSM3TmZRvJu64g/giphy.gif) 
+![](https://media.giphy.com/media/JRUpVRjfyLkRrvltDG/giphy.gif) 
 
 
 Option 3: Verse
