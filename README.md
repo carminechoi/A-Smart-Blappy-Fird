@@ -1,5 +1,6 @@
 # A-Smart-Blappy-Fird
-Description  A Learning Project to familiarize with NEAT, Neural Networks, and Genetic Algorithms
+### Description  
+A fun, experimental project to familiarize with NEAT, Neural Networks, and Genetic Algorithms
 
 ### Prerequisites
 
