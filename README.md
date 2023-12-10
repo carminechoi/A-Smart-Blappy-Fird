@@ -8,7 +8,7 @@ A fun, experimental project to familiarize with NEAT, Neural Networks, and Genet
   
 2. [Pygame v1.9.x](http://www.pygame.org/download.shtml)
 
-3. [NEAT v0.92](https://neat-python.readthedocs.io/en/latest/installation.html)
+3. [NEAT v0.9](https://neat-python.readthedocs.io/en/latest/installation.html)
 
 ### Installing
 
